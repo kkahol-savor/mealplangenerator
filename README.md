@@ -1,95 +1,122 @@
 
-# Basic Chat Application with OpenAI Integration
+# Eddie: Personalized AI Meal Planner  
+**Authored by Dr. Kanav Kahol**
 
-This is a simple chat application that integrates a frontend and backend to provide chat functionality using OpenAI's API. The application allows users to interact with an AI agent and receive responses in real time.
+Eddie is an AI-powered personalized meal planning assistant built using FastAPI and OpenAI’s GPT-4o. It creates highly customized 7-day meal plans tailored to a patient's medical conditions, ethnicity, dietary preferences, and weight management goals.
 
-## Project Structure
+The application streams the AI's responses in real-time and allows users to save their meal plans in both Markdown and PDF formats.
 
-- **`main.py`**: The entry point for the backend application, implemented using FastAPI.
-- **`query_openai.py`**: Contains helper functions to interact with OpenAI's API.
-- **`requirements.txt`**: Lists all the dependencies required for the project.
-- **`static/`**: Contains static files (CSS, JavaScript, images).
-  - **`styles.css`**: Defines the styling for the application.
-  - **`chat.js`**: Handles the frontend logic and manages communication with the backend.
-  - **`Logo.png`**: The logo displayed in the header.
-- **`templates/`**: Contains HTML templates.
-  - **`index.html`**: The main HTML page for the chat interface.
+![Eddie Meal Planner Screenshot](static/EDMScreenshot.png)
 
-## Installation
+---
 
-1. Clone this repository:
+## 🧠 Key Features
+
+- 🥗 **AI-generated 7-day meal plans**
+- 💬 **Streaming chat interaction with OpenAI**
+- 📊 **Per-meal and daily macronutrient breakdowns**
+- 📚 **21 fully detailed recipes (one for each meal)**
+- 💾 **Export to Markdown and PDF**
+- 🌍 **Culturally relevant and health-aware meal suggestions**
+- 🏥 **Tailored to chronic conditions like diabetes, hypertension, etc.**
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- [OpenAI API key](https://platform.openai.com/account/api-keys)
+- [wkhtmltopdf](https://wkhtmltopdf.org/) (for `pdfkit` to work)
+- pip
+
+### Installation
+
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-repo/chat-app.git
-   cd chat-app
+   git clone https://github.com/your-username/eddie-meal-planner.git
+   cd eddie-meal-planner
    ```
 
-2. Install dependencies:
+2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Set up environment variables:
-   - Create a `.env` file in the root directory.
-   - Add your OpenAI API key:
-     ```env
-     OPENAI_API_KEY=your_api_key_here
-     ```
-
-4. Run the application:
-   ```bash
-   uvicorn main:app --reload
+3. **Create a `.env` file**
+   ```
+   OPENAI_API_KEY=your_openai_api_key
    ```
 
-5. Open your browser and navigate to `http://127.0.0.1:8000`.
-
-## Features
-
-- **Real-Time Chat**: Users can send messages and receive responses in real time.
-- **Markdown Rendering**: The application supports rendering responses with Markdown for better readability.
-- **Session Management**: Unique session IDs are generated for each user to maintain context.
-- **Custom Styling**: The interface is styled using CSS for a clean and modern look.
-
-## File Descriptions
-
-### `main.py`
-- Starts the FastAPI server.
-- Defines API endpoints to handle user requests and communicate with OpenAI.
-
-### `query_openai.py`
-- Contains utility functions for querying OpenAI's API and processing responses.
-
-### `requirements.txt`
-- Dependencies:
-  - `uvicorn`: ASGI server.
-  - `fastapi`: Framework for building APIs.
-  - `jinja2`: Template engine for rendering HTML.
-  - `httpx`: HTTP client for making API requests.
-  - `python-dotenv`: For managing environment variables.
-  - `openai`: Official OpenAI library.
-
-### Static Files
-- **`styles.css`**: Manages the layout and design, including gradients, header styling, and chat box appearance.
-- **`chat.js`**: Implements the client-side logic for handling form submissions and streaming server responses.
-- **`Logo.png`**: Adds a visual identity to the application.
-
-### Template
-- **`index.html`**: Defines the basic structure of the chat interface. It includes placeholders for dynamic content like username and chat messages.
-
-## Usage
-
-1. Start the server by running `uvicorn`.
-2. Open the application in your browser.
-3. Interact with the chat by typing a query and pressing the "Send" button.
-
-## Future Improvements
-
-- Add user authentication.
-- Implement more robust error handling.
-- Enhance the UI for mobile responsiveness.
-- Support additional languages and features.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+4. **(Optional) Install wkhtmltopdf**
+   - [Download here](https://wkhtmltopdf.org/downloads.html) and ensure it’s in your PATH.
 
 ---
+
+## 🏃‍♂️ Running the Application
+
+```bash
+uvicorn main:app --reload
+```
+
+Visit: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🖥️ File Structure
+
+```
+.
+├── main.py                # FastAPI server with endpoints for streaming and saving meal plans
+├── query_openai.py        # Query handler with prompt engineering and OpenAI integration
+├── requirements.txt       # Python dependencies
+├── templates/index.html   # UI template for interaction
+├── static/                # Static assets (CSS, JS)
+├── saved_recipes/         # Output folder for generated meal plans
+└── .env                   # API key for OpenAI (not checked into version control)
+```
+
+---
+
+## 🧩 Endpoints
+
+- `/` – Renders the main app page.
+- `/home` – Redirect view with a custom name.
+- `/stream` – Streams AI response for a user query in real-time using Server-Sent Events (SSE).
+- `/save_meal_plan` – Accepts JSON payload and saves the meal plan as `.md` and `.pdf`.
+
+---
+
+## 📝 Example Usage
+
+Input:
+```json
+{
+  "name": "Kanav",
+  "meal_plan": "# Day 1\nBreakfast: ..."
+}
+```
+or simply type in the 
+
+Output:
+- `saved_recipes/Kanav_2025-03-25.md`
+- `saved_recipes/Kanav_2025-03-25.pdf`
+
+---
+
+## 🔐 Security Note
+
+This project uses `dotenv` to securely manage API keys and other environment variables. Ensure your `.env` is never committed to source control.
+
+---
+
+## ✍️ Author
+
+**Dr. Kanav Kahol**  
+GenAi Expert
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
